@@ -1,5 +1,5 @@
 from moviepy.editor import *
-from moviepy.video.fx.all import crop
+from moviepy.video.fx.crop import crop
 import ntpath
 from os.path import isfile
 
@@ -25,7 +25,7 @@ def save_sign_language_video(video_path, cropped_path):
     # if not (w == 1280 and h == 720):
     #     print("ERROR: Unexpected dimension found")
 
-    clip = clip.subclip(header_trim_duration, duration - footer_trim_duration)
+    # clip = clip.subclip(header_trim_duration, duration - footer_trim_duration)
     # clip = clip.subclip(10, 40)
 
     cropped_clip = crop(clip, width=2 * w / 5, height=(3*h)/5, x_center=4 * w / 5,
