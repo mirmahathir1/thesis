@@ -12,14 +12,25 @@ drive_log_directory = '..\\extracted_skeletons\\'
 
 
 def is_already_extracted(video_file_base):
-    return os.path.isfile(drive_log_directory + video_file_base + '.zip')
+    return os.path.isfile(drive_log_directory + video_file_base.strip() + '.zip')
 
 
-video_list = [f for f in listdir(path_to_videos) if isfile(join(path_to_videos, f))]
+video_list = [f for f in listdir(path_to_videos) if isfile(join(path_to_videos, f)) and '.gitignore' not in f]
 
 video_list.sort(reverse=True)
 
-for video in video_list:
+incomplete_videos = [video for video in video_list if not is_already_extracted(video.split('.')[0])]
+
+# print("total videos: ")
+# print(video_list)
+print(f"total video count: {len(video_list)}")
+
+
+# print("incomplete videos")
+# print(incomplete_videos)
+print(f"incomplete video count: {len(incomplete_videos)}")
+
+for video in incomplete_videos:
     start_time = time.time()
     video_file_base = video.split('.')[0]
     if is_already_extracted(video_file_base):
