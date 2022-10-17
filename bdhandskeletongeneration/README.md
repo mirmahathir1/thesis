@@ -1,0 +1,1 @@
+this folder has been used to extract the raw skeletons from both bbc and bdhandspeak news cropped videos using openpose

@@ -1,0 +1,1 @@
+This folder was used to crop and downsample raw videos downloaded from bbc youtube.
