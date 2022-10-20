@@ -2,5 +2,6 @@ envs
 avi_files
 jsons
 reduced_framerate_raw_videos
-texts
+texts*
 videos_with_skeletons
+csv_files
