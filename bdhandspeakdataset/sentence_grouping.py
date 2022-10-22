@@ -4,10 +4,15 @@ import pandas as pd
 from os import listdir
 from os.path import isfile, join
 
+number_regex = r'[0-9][0-9,.]+[0-9]'
+
 def similar(a, b):
     return SequenceMatcher(None, a, b).ratio()
 
 def remove_punctuation(sentence):
+    number_occurances = re.findall(number_regex, sentence)
+    for number_occurance in number_occurances:
+        sentence = sentence.replace(number_occurance, re.sub(r'[^\w\s]', '', number_occurance))
     sentence = sentence.replace('\'s ', "s ")
     sentence = sentence.replace('\'t ', "t ")
     return re.sub(r'[^\w\s]', ' ', sentence)
@@ -16,7 +21,6 @@ def remove_punctuation(sentence):
 def remove_multiple_whitespaces(sentence):
     sentence = sentence.replace('\n','')
     return re.sub(' +', ' ', sentence)
-
 
 def convert_to_small_letter(sentence):
     return sentence.lower()

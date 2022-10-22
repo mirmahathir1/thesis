@@ -5,3 +5,8 @@ reduced_framerate_raw_videos
 texts*
 videos_with_skeletons
 csv_files
+skeletons_json
+subtitles_csv
+subtitles_text
+subtitles_translated
+skeleton_csv

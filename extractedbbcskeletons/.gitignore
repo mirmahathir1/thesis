@@ -5,3 +5,5 @@ reduced_framerate_raw_videos
 texts
 videos_with_skeletons
 mp3_files
+skeleton_csv
+skeleton_json
