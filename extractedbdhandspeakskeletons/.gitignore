@@ -8,5 +8,6 @@ csv_files
 skeletons_json
 subtitles_csv
 subtitles_text
-subtitles_translated
+subtitles_translated_csv
+subtitles_translated_csv.v2
 skeleton_csv
