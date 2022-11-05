@@ -31,10 +31,15 @@ for csv_file in tqdm(csv_files):
     total_lines += data_frame.shape[0]
 
     for index in data_frame.index:
-        if pd.isnull(data_frame.loc[index,'translation']):
-            data_frame.loc[index,'translation'] = ''
-            continue
+        if pd.isnull(data_frame.loc[index,'translation']) or len(data_frame.loc[index,'translation'].strip()) == 0:
+            data_frame.loc[index,'translation'] = 'ফাঁকা'
+        if pd.isnull(data_frame.loc[index,'text']) or len(data_frame.loc[index,'text'].strip()) == 0:
+            data_frame.loc[index,'text'] = 'silent'
+
         data_frame.loc[index,'translation'] = replace_english_digits(remove_english_letters(data_frame.loc[index,'translation']))
+
+        if pd.isnull(data_frame.loc[index,'translation']) or len(data_frame.loc[index,'translation'].strip()) == 0:
+            data_frame.loc[index,'translation'] = 'ফাঁকা'
 
     data_frame.to_csv(path_to_post_processed_csv_files + '/' + csv_file, index=False)
 
