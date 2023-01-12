@@ -5,6 +5,8 @@ import pandas as pd
 from os import listdir
 from os.path import isfile, join
 
+exit(0)
+
 class GoogleTranslateWebScrapper: 
     def __init__(self) -> None:
         self.text_input_position_x = 86

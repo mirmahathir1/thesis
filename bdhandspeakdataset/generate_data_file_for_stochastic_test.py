@@ -3,13 +3,13 @@ import pickle
 import gzip
 
 def load_dataset_file(filename):
-    with gzip.open(filename, "rb") as f:
+    with open(filename, "rb") as f:
         loaded_object = pickle.load(f)
         return loaded_object
 
 samples = {}
 
-path = './data_for_stochastic/phoenix14t.pami0.train'
+path = '../model/stochastic/data/phoenix14t.pami0.train'
 
 if not isinstance(path, list):
     path = [path]

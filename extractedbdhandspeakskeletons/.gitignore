@@ -13,3 +13,6 @@ subtitles_translated_csv.v2
 skeleton_csv
 dump
 skeleton_subtitle_jsons
+video_embeddings_cropped
+video_embeddings
+cropped_videos

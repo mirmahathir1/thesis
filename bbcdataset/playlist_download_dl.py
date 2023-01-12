@@ -2,7 +2,8 @@
 from pytube import Playlist, YouTube
 import os
 # CONTROLLER VARIABLES
-playlist_link = 'https://www.youtube.com/playlist?list=PL5A4nPQbUF8Ck7csEOg98U0-bA970noXS'
+# playlist_link = 'https://www.youtube.com/playlist?list=PL5A4nPQbUF8Ck7csEOg98U0-bA970noXS'
+playlist_link = "https://www.youtube.com/playlist?list=PLoijsUvO6bOX0kL94YYvrxvTOUxXzTkZw"
 playlist = Playlist(playlist_link)
 
 number_of_videos_to_be_downloaded = len(playlist.video_urls)
@@ -54,7 +55,7 @@ for video_url in playlist.video_urls[:number_of_videos_to_be_downloaded]:
 
     if enable_download:
         print("Download: video start ")
-        os.system('youtube-dl -f \'bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4\' -o "./raw_videos/%(title)s.%(ext)s" '+video_url)
+        os.system('.\\youtube-dl.exe -f \'bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4\' -o "./raw_videos/%(title)s.%(ext)s" '+video_url)
         print("Download: video end ")
         write_completed_url(video_url)
 

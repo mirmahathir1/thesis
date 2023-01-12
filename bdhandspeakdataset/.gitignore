@@ -2,3 +2,5 @@ env
 .idea
 __pycache__
 data_for_stochastic
+.ipynb_checkpoints
+cleaned_texts

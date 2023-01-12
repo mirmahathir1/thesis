@@ -7,6 +7,7 @@ from os.path import isfile, join
 import pandas as pd
 import json
 import numpy as np
+from tqdm import tqdm
 
 json_indentation = None
 # json_indentation = 4
@@ -14,12 +15,13 @@ json_indentation = None
 raw_video_path_root = '../extractedbdhandspeakskeletons/reduced_framerate_raw_videos'
 subtitle_csv_file_path_root = '../extractedbdhandspeakskeletons/subtitles_translated_csv.v2'
 skeleton_csv_file_path_root = '../extractedbdhandspeakskeletons/skeleton_csv'
+
 json_file_path_root = '../extractedbdhandspeakskeletons/skeleton_subtitle_jsons'
 
 raw_video_paths = [f for f in listdir(raw_video_path_root) if isfile(join(raw_video_path_root, f))]
 
-for video_file in raw_video_paths:
-    print(f"reading video {video_file}")
+for video_file in tqdm(raw_video_paths):
+    # print(f"reading video {video_file}")
     video_name = video_file.split('.')[0]
 
     video_full_path = raw_video_path_root+"/"+video_file
@@ -37,15 +39,19 @@ for video_file in raw_video_paths:
         exit(0)
     duration = clip.duration
 
-    x_columns = (skeleton_dataframe.filter(like='_x')/width).round(5)
-    y_columns = (skeleton_dataframe.filter(like='_y')/height).round(5)
+    center_x = skeleton_dataframe['pose_1_x'].copy(deep=True)
+    x_columns = (skeleton_dataframe.filter(like='_x').sub(skeleton_dataframe['pose_1_x'], axis='rows')/height).round(5)
+
+    center_y = skeleton_dataframe['pose_1_y'].copy(deep=True)
+    y_columns = (skeleton_dataframe.filter(like='_y').sub(skeleton_dataframe['pose_1_y'], axis='rows')/height).round(5)
+
     skeleton_dataframe = pd.concat([x_columns, y_columns], axis=1)
 
-    print(f"video resolution: {width}X{height}")
-    print(f"subtitle row count: {subtitle_dataframe.shape[0]}")
-    print(f"skeleton file row count: {skeleton_dataframe.shape[0]}")
-    # print(f"subtitle columns: {subtitle_dataframe.columns}")
-    # print(f"skeleton dataframe columns: {skeleton_dataframe.columns}")
+    skeleton_dataframe = skeleton_dataframe.fillna(0)
+
+    # print(f"video resolution: {width}X{height}")
+    # print(f"subtitle row count: {subtitle_dataframe.shape[0]}")
+    # print(f"skeleton file row count: {skeleton_dataframe.shape[0]}")
 
     subtitle_dataframe = subtitle_dataframe.reset_index()
     skeleton_dataframe = skeleton_dataframe.reset_index()
@@ -56,6 +62,10 @@ for video_file in raw_video_paths:
 
     if subtitle_dataframe.shape[0] == 0:
         print(f"no subtitle found for video. code will exit")
+        exit(0)
+
+    if skeleton_dataframe.shape[0] == 0:
+        print(f"no skeletons found")
         exit(0)
 
     for index, row in subtitle_dataframe.iterrows():

@@ -4,7 +4,9 @@ from os.path import isfile, join
 import string
 import time
 
-playlist = Playlist('https://www.youtube.com/playlist?list=PL5A4nPQbUF8Ck7csEOg98U0-bA970noXS')
+# playlist = Playlist('https://www.youtube.com/playlist?list=PL5A4nPQbUF8Ck7csEOg98U0-bA970noXS')
+playlist = Playlist('https://www.youtube.com/playlist?list=PLoijsUvO6bOX0kL94YYvrxvTOUxXzTkZw')
+
 print('Number of videos in playlist online: %s' % len(playlist.video_urls))
 
 cropped_video_path = 'cropped_reduced_videos'
