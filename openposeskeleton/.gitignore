@@ -5,3 +5,4 @@ tmp_jsons
 active.avi
 extracted_skeletons
 csv_files
+__pycache__

@@ -4,22 +4,23 @@ from os import listdir
 from os.path import isfile, join
 import subprocess
 import time
+import sys
+sys.path.append('../')
+import lib
 
 os.chdir('openpose')
 
-path_to_videos = '..\\reduced_videos\\'
+path_to_videos = '..\\..\\extractedbtvdataset\\cropped_reduced_videos\\'
 drive_log_directory = '..\\extracted_skeletons\\'
 
 
 def is_already_extracted(video_file_base):
-    return os.path.isfile(drive_log_directory + video_file_base.strip() + '.zip')
+    return os.path.isfile(f"{drive_log_directory}/{video_file_base}.zip")
 
 
-video_list = [f for f in listdir(path_to_videos) if isfile(join(path_to_videos, f)) and '.gitignore' not in f]
-
-video_list.sort(reverse=True)
-
-incomplete_videos = [video for video in video_list if not is_already_extracted(video.split('.')[0])]
+video_list = lib.get_file_list_directory(path_to_videos, '.mp4')
+# video_list = ["n2LPq88ZQyM_cropped_reduced"]
+incomplete_videos = [video for video in video_list if not is_already_extracted(video)]
 
 # print("total videos: ")
 # print(video_list)
@@ -32,8 +33,8 @@ print(f"incomplete video count: {len(incomplete_videos)}")
 
 for video in incomplete_videos:
     start_time = time.time()
-    video_file_base = video.split('.')[0]
-    if is_already_extracted(video_file_base):
+    video_file_base = video
+    if is_already_extracted(drive_log_directory + video_file_base + '.zip'):
         print("skipping " + video_file_base)
         continue
 
@@ -49,7 +50,7 @@ for video in incomplete_videos:
     print("name of video: " + video_file_base)
     print("started extraction of avi file...")
 
-    result = subprocess.run(['ffmpeg', '-i', '..\\reduced_videos\\'+video_file_base+'.mp4', '-c:a', 'aac', '-c:v', 'libx264', '-b:a', '384K', '..\\active.avi'])
+    result = subprocess.run(['ffmpeg', '-i', path_to_videos + video_file_base+'.mp4', '-c:a', 'aac', '-c:v', 'libx264', '-b:a', '384K', '..\\active.avi'])
     # ffmpeg -i input.mp4 -c:v libx264 -c:a libmp3lame -b:a 384K output.avi
     print("stdout:", result.stdout)
     print("stderr:", result.stderr)
@@ -72,10 +73,10 @@ for video in incomplete_videos:
         print("fatal error in openpose extraction")
         exit(1)
     print("zipping logs...")
-    shutil.make_archive('..\\' + video_file_base.strip(), 'zip',
+    shutil.make_archive('..\\' + video_file_base, 'zip',
                         '..\\tmp_jsons\\')
     print("moving to drive...")
-    shutil.move('..\\' + video_file_base.strip() + '.zip',
-                '..\\extracted_skeletons\\' + video_file_base.strip() + '.zip')
+    shutil.move('..\\' + video_file_base + '.zip',
+                drive_log_directory + video_file_base + '.zip')
     shutil.move("..\\active_output.avi", "..\\videos_with_skeletons\\"+video_file_base+".avi")
     print(f"---- time: {(time.time() - start_time) / 60} minutes-----")

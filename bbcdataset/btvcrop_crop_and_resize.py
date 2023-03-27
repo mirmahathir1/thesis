@@ -38,5 +38,3 @@ for video_name in video_names:
 
     resized_clip.write_videofile('tmp/meh.mp4',codec='libx264')
     shutil.move("tmp/meh.mp4", cropped_video_name)
-
-    exit()

@@ -38,7 +38,8 @@ def add_column(df, row):
 path_to_jsons = "./extracted_skeletons"
 
 # path_to_zips = '../extractedbdhandspeakskeletons/jsons'
-path_to_zips = '../extractedbbcskeletons/jsons'
+# path_to_zips = '../extractedbbcskeletons/jsons'
+path_to_zips = '../extractedbtvdataset/extracted_skeletons'
 
 zip_files = [f for f in listdir(path_to_zips) if isfile(join(path_to_zips, f))]
 
@@ -49,12 +50,11 @@ for zip_file_name in zip_files:
         print(f"skipping: {zip_file_name}")
         continue
 
-    shutil.rmtree('./extracted_skeletons', ignore_errors=True)
-    os.makedirs('./extracted_skeletons', exist_ok=True)
+    shutil.rmtree(path_to_jsons, ignore_errors=True)
+    os.makedirs(path_to_jsons, exist_ok=True)
     filename = path_to_zips+"/"+zip_file_name
-    extract_dir = "./extracted_skeletons"
     archive_format = "zip"
-    shutil.unpack_archive(filename, extract_dir, archive_format)
+    shutil.unpack_archive(filename, path_to_jsons, archive_format)
 
     json_data_frame = pd.DataFrame(columns=column_names)
     json_list = [f for f in listdir(path_to_jsons) if isfile(join(path_to_jsons, f))]

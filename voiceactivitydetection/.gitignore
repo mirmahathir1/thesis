@@ -1,0 +1,6 @@
+envs
+hugging_face_token.py
+audio_segments
+tmp
+wav_files
+__pycache__
