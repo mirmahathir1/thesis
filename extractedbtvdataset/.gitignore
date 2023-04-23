@@ -1,9 +1,2 @@
-cropped_reduced_videos
-cropped_videos
-ignore
-selected
-selected_coordinates
-speech_segments
-audio_segments
-extracted_skeletons
-segmented_videos
+*
+!.gitignore

@@ -1,0 +1,5 @@
+envs
+__pycache__
+config
+text_lines_WITHOUTENDOFLINE
+text_transcripts_WITHOUTENDOFLINE
